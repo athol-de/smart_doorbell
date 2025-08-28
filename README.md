@@ -1,15 +1,15 @@
 This project solves a simple common problem: you are sitting at home anywhere in your house / flat, wearing headphones because you are on a Teams / Zoom / Meet call, on the phone or just listening to music or a Youtube video, and when your Amazon parcel is delivered you are missing the doorbell. At least in Germany that means starting to track your parcel, wait at least a day and then travel through your city to fetch the parcel at some store with inconvenient opening hours. You get the problem? Let's solve it.
 
-What does do? When your doorbell is pressed:
+What does it do? When your doorbell is pressed:
 - a separate device ("receiver", code included) on your desk, connected to the same network, is blinking for 20sec,
 - you get a Telegram message that your door is ringing,
 - a MQTT message is sent (whatever that is good for).
 
-Doorbells are usually a simple 12V AC power source (transformator), the doorbell itself as a switch that powers some device that makes noise and that device. That's sometimes a simple solenoid pinging a piece of metal, sometimes a more sophisticated device.
+Doorbells usually consists of a simple 12V AC power source (transformator), the doorbell switch at the door that powers some device that makes noise and finally that ringing device itself. That's sometimes a simple solenoid pinging a piece of metal, sometimes a more sophisticated device. And not relevant for our project here - your classic doorbell stays almost untouched and will still work of course.
 
 In this project, we use a PC817 AC opto coupler to get the doorbell signal and make it digital. The ESP8266 then makes three different things with that:
 - sending an UDP package to a receiver with an LED stripe, giving an optical signal (also part of this project)
-- sending a Telegram notification (Telegram, because there is an lightweight and capable API for that)
+- sending a Telegram notification (Telegram, because there is a lightweight and capable API for that)
 - sending a MQTT message (in my case to an ioBroker instance, for documentation only so far)
 
 Additionally the code restarts the device every night (because an ESP8266 seems to get fragile when running for days, weeks and months), and it is OTA capable and looks for an updated firmware on every restart (so, every night).
@@ -29,15 +29,15 @@ HOW TO GET IT UP AND RUNNING
 __hardware you will need__
 
 - 2x ESP8266 (ESP32 will also work, but then you have to figure out the WiFi on your own because it's slightly different)
-- 1x opto coupler PC817 (that's basically a LED and a photo resistor in a small case to uncouple the 12V AC power of the doorbell from the 5V / 3V3 DC ofthe ESP)
+- 1x opto coupler PC817 (that's basically a LED and a photo resistor in a small case to uncouple the 12V AC power of the doorbell from the 5V / 3V3 DC of the ESP)
 - 1x 1kOhm resistor
-- 1 ... n WS2812 LEDs, at least 5 recommend (you can also modify the code to use a single LED, but then you loose part of the effect)
+- 1 ... n WS2812 LED strip, at least 5 recommended (8 is default; you can also modify the code to use a single LED, but then you loose part of the effect)
 
 __how to build__
 
 One ESP becomes the "master", one the "receiver".
 
-On the master, connect the opto coupler on the photo resistor side to GND and D4 of the ESP (or any other you find more convenient). Connect the AC side with the 1k resistor in a row to the doorbell switch. The resistor makes the 12V AC survivable for the LED built into the opto coupler.
+On the master, connect the opto coupler on the photo resistor side to GND and D4 of the ESP (or any other GPIO you find more convenient). Connect the AC side with the 1k resistor in a row to the doorbell switch. The resistor makes the 12V AC survivable for the LED built into the opto coupler.
 
 On the receiver, connect the LED stripe to GND, 5V and the data pin to D1 (or any other you find more convenient).
 
@@ -95,6 +95,6 @@ __flashing__
 
 Finally you can compile the code and flash it to your ESP. Concerning the WiFi connection it works exactly the same way like the receiver: connect to the new WiFi "doorbell_ABCDEF" this time, open 192.168.4.1, choose your WiFi und provide the password, confirm.
 
-Whenever you apply approx. 12V AC to the two AC pins of the PC817 (with the 1k resistor in a row of course!), the master will be triggered and send the UDP package to the receiver, a Telegram message and the MQTT updates. You are done!
+Whenever you apply approx. 12V AC to the two AC pins of the PC817 (with the 1k resistor in a row of course!), the master will be triggered and send the UDP package to the receiver, a Telegram message and the MQTT updates. You are done! So when finally installing the device, you apply the same 12V AC that goes to your ringing device also to the ESP, so you put the ESP input (the two PC817 inputs, one resistor-protected) parallel to your existing ringing device. Whenever the doorbell switch is pressed, both the PC817 and your existing ringing device get power. 
 
 (For testing you can also use e.g. 8V DC to trigger the PC817, but be aware it will only work in one direction as the internal trigger device is a LED that will only light on when connected the right way. So try both directions if one does not work.) 
