@@ -5,7 +5,7 @@ What does it do? When your doorbell is pressed:
 - you get a Telegram message that your door is ringing,
 - a MQTT message is sent (whatever that is good for).
 
-Doorbells usually consists of a simple 12V AC power source (transformator), the doorbell switch at the door that powers some device that makes noise and finally that ringing device itself. That's sometimes a simple solenoid pinging a piece of metal, sometimes a more sophisticated device. And not relevant for our project here - your classic doorbell stays almost untouched and will still work of course.
+Doorbells usually consists of a simple 12V AC power source (transformator), the doorbell switch at the door that powers some device that makes noise and finally that ringing device itself. That's sometimes a simple solenoid pinging a piece of metal, sometimes a more sophisticated device. And not relevant for our project here - your classic doorbell stays almost untouched and will of course still work.
 
 In this project, we use a PC817 AC opto coupler to get the doorbell signal and make it digital. The ESP8266 then makes three different things with that:
 - sending an UDP package to a receiver with an LED stripe, giving an optical signal (also part of this project)
