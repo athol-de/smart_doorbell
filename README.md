@@ -1,8 +1,6 @@
-This project solves a simple common problem: you are sitting at home anywhere in your house / flat,
-wearing headphones because you are on a Teams / Zoom / Meet call or just listening to a Youtube video,
-and when your Amazon parcel is delivered, you are missing the doorbell. At least in Germany that
-means starting to track your parcel, wait at least a day and then travel through your city to fetch
-the parcel at some store with horrible opening ours. You get the problem? Let's solve it.
+This project solves a simple common problem: you are sitting at home anywhere in your house / flat, wearing headphones because you are on a Teams / Zoom / Meet call or just listening to a Youtube video,
+and when your Amazon parcel is delivered, you are missing the doorbell. At least in Germany that means starting to track your parcel, wait at least a day and then travel through your city to fetch
+the parcel at some store with inconvenient opening hours. You get the problem? Let's solve it.
 
 Doorbells are usually a simple 12V AC power source (transformator), the doorbell itself is a switch
 that powers some device that makes noise. That's sometimes a simple solenoid pinging a piece of
