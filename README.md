@@ -67,17 +67,17 @@ You will need a Telegram bot API and therefore use a bot you already have or get
 
 To get one, open Telegram (web or mobile device) and start talking to "BotFather". He will guide you through the process of creating a bot (and changing the name, adding a photo etc.). You will get the API key from him.
 
-Then talk to "userinfobot" by typing "/start". This bot will tell you your own chatID. Finally, Start talking to your own, newly created bot by typing "/start". It won't answer, but it is necessary that the communication is initiated by you - it can't just start talking to you.
+Then talk to "userinfobot" by typing "/start". This bot will tell you your own chatID. Finally, start talking to your own, newly created bot by typing "/start". It won't answer, but it is necessary that the conversation is initiated by you - it can't just start talking to you.
 
 If you want to add additional recipients, do the same for their accounts and duplicate the Telegram message sending-related lines in the code. (It's called CHAT_ID1 in the code by purpose, because my personal instance is sending out messages to two different chatIDs.)
 
-Adjust the Telegram message if you like.
+Adjust the Telegram message as you like.
 
 __OTA__
 
-Find a location where you can store the firmware. In my case that's my ioBroker instance, but it can be any URL accessable by the ESP, e.g. a simple file server. It can even be on the internet, but I do not recommend that, because anybody can access it if he knows the URL, and even it's an compiled BIN file, it contains at least your Telegram bot API key, and the ESP8266 is not capable of SSL, so it must be an unprotected HTTP URL. So handle with care!
+Find a file location where you can store the firmware. In my case that's my ioBroker instance, but it can be any URL accessable by the ESP, e.g. a simple file server. It can even be on the internet, but I do not recommend that, because anybody can access it if he knows the URL, and even it's an compiled BIN file, it contains at least your Telegram bot API key. And as the ESP8266 is not capable of SSL, it must be an unprotected HTTP URL. So handle with care! Something locally on your LAN is recommended.
 
-Once you have determined the base URL, add it to the code ("baseUrl"). For my ioBroker that would be "http://iobroker:8081/files/0_userdata.0/ota/" (with the name "iobroker" assigned to the IP in my Fritzbox router, and /ota a subfolder I created in the ioBroker files section).
+Once you have determined the base URL, add it to the code ("baseUrl"). For my ioBroker that would be "http://iobroker:8081/files/0_userdata.0/ota/" (with the name "iobroker" assigned to ioBroker's IP in my Fritzbox router, port 8081 being default for ioBroker, and "/ota" a subfolder I created in the ioBroker files section).
 
 The master will look for a file named "fw_ABCDEF.txt" first, with "ABCDEF" again the serial number of your ESP8266 (the master's one this time!). To determine that, either open the serial monitor when flashing the ESP (see chapter below) - it will print the filenames it looks for on the serial console. You can also look at the logs of your fileserver, it will probably show a warning like "file ESP_ABCDEF.txt asked for, but not found" or similar. ioBroker will do so.
 
@@ -87,16 +87,20 @@ To use OTA, store two files at your base URL:
 
 For future updates make sure that the new firmware contains the new version number ("CURRENT_VERSION") and the value in fw_ABCDEF.txt is identically to that, otherwise the ESP might end up with endless tries of reinstalling the same firmware over and over.
 
+OTA comes extremely handy once your master device is installed near the doorbell, probably somewhere down in your home's electric appliances where it is hard to disconnect and flash with a USB cable for any minor updates. That's the reason I went for OTA for the master only.
+
 __MQTT__
 
-MQTT is for documentation purposes only so far - I run a separate script on my ioBroker acting as a heartbeat and looking for the last signs of life of different systems, including the doorbell. Therefore the doorbell updates two different MQTT topics with "ring" each time the door rings and "start" each time the device reboots (lastevent topic), and a lean JSON in the topic "json" with pretty much the same information. To ensure the "event" topic is updated even in case two start events or two ring events happen in a row, it's set to "update" first always, followed two seconds later with the real event.
+MQTT is for documentation purposes only so far - I run a separate script on my ioBroker acting as a heartbeat and looking for the last signs of life of different systems, including the doorbell. Therefore the doorbell updates two different MQTT topics with "ring" each time the door rings and "start" each time the device reboots (lastevent topic), and a lean JSON in the topic "json" with pretty much the same information. To ensure the "event" topic is updated even in case two start events or two ring events happen in a row, it's always set to "update" first, followed two seconds later with the real event.
 
 To make that work you have to add your MQTT broker's IP ("mqttServer"), the username ("mqttUsername") and password ("mqttPassword"). You may also want to adjust the topics - by default it's using my structure ("doorbell/main/json" and "doorbell/main/lastevent").  
 
 __flashing__
 
-Finally you can compile the code and flash it to your ESP. Concerning the WiFi connection it works exactly the same way like the receiver: connect to the new WiFi "doorbell_ABCDEF" this time, open 192.168.4.1, choose your WiFi und provide the password, confirm.
+Finally you can compile the code and flash it to your ESP. Concerning the WiFi connection it works exactly the same way like the receiver: connect to the new WiFi "doorbell_ABCDEF" this time, open http://192.168.4.1, choose your WiFi und provide the password, confirm.
 
-Whenever you apply approx. 12V AC to the two AC pins of the PC817 (with the 1k resistor in a row of course!), the master will be triggered and send the UDP package to the receiver, a Telegram message and the MQTT updates. You are done! So when finally installing the device, you apply the same 12V AC that goes to your ringing device also to the ESP, so you put the ESP input (the two PC817 inputs, one resistor-protected) parallel to your existing ringing device. Whenever the doorbell switch is pressed, both the PC817 and your existing ringing device get power. 
+You are done! Whenever you apply approx. 12V AC to the two AC pins of the PC817 (with the 1k resistor in a row of course!) now, the master will be triggered and send the UDP package to the receiver, a Telegram message and the MQTT updates. So when finally installing the device, you apply the same 12V AC that goes to your ringing device also to the ESP, so you put the ESP input (the two PC817 inputs, one resistor-protected) parallel to your existing ringing device. Whenever the doorbell switch is pressed, both the PC817 and your existing ringing device get power. 
 
-(For testing you can also use e.g. 8V DC to trigger the PC817, but be aware it will only work in one direction as the internal trigger device is a LED that will only light on when connected the right way. So try both directions if one does not work.) 
+(For testing you can also use e.g. 8V DC to trigger the PC817, but be aware it will only work in one direction as the internal trigger device is a LED that will only light on when connected to DC the right way. So try both directions if one does not work.) 
+
+Looking forward to your feedback.
