@@ -114,7 +114,8 @@ void loop() {
   int packetSize;
   packetSize = Udp.parsePacket();
   if (packetSize) {
-    Serial.print("Ring by IP "); Serial.println(Udp.remoteIP());
+    Serial.print("Ring by IP ");
+    Serial.println(Udp.remoteIP());
     // pulse the Neopixel stripe for 20 secs
     lastRingMillis = millis();
     while (millis() - lastRingMillis < 20 * 1000) { // blink for 20 secs
