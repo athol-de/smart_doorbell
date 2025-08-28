@@ -49,7 +49,7 @@ To determine the receiver's IP it's necessary we start with this one. That's eas
 
 Once it has rebooted, it will look for known WiFi networks (there are none), than it will switch to AP mode. You will see a new WiFi named "doorbell_receiver_ABCDEF" (with ABCDEF the hex serial number of your ESP). Connect to it, open http://192.168.4.1 with a browser, there choose the WiFi the ESP shall connect to in production, provide the password and confirm. The ESP will reboot and connect to that given network. (This process is provided by the WiFiManager.h library, not my own work.) You will see a short initial animation on the connected LED stripe (in case you managed to connect the LED stripe correctly).
 
-Now your receiver is already running and listining. To identify its IP address you will have to look in your router. There will be a new device called "ESP-ABCDEF" (with ABCDEF again your device's serial number). Identify the IP address your router assigned to it, and better make sure it always gets the same one. E.g. using a Fritzbox, you can choose the option "always assign the same IP to this device" to ensure that. Remember the assigned IP, we will need it in a minute.
+Now your receiver is already running and listining. To identify its IP address you will have to look at your router. There will be a new device called "ESP-ABCDEF" (with ABCDEF again your device's serial number). Identify the IP address your router assigned to it, and better make sure it always gets the same one. E.g. using a Fritzbox, you can choose the option "always assign the same IP to this device" to ensure that. Remember the assigned IP, we will need it in a minute.
 
 __getting the master ready__
 
