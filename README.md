@@ -75,7 +75,7 @@ Adjust the Telegram message as you like.
 
 __OTA__
 
-Find a file location where you can store the firmware. In my case that's my ioBroker instance, but it can be any URL accessable by the ESP, e.g. a simple file server. It can even be on the internet, but I do not recommend that, because anybody can access it if he knows the URL, and even it's an compiled BIN file, it contains at least your Telegram bot API key. And as the ESP8266 is not capable of SSL, it must be an unprotected HTTP URL. So handle with care! Something locally on your LAN is recommended.
+Find a file location where you can store the firmware. In my case that's my ioBroker instance, but it can be any URL accessable by the ESP, e.g. a simple file server. It can even be on the internet, but I do not recommend that, because anybody can access it if he knows the URL, and although it's an compiled BIN file, it contains at least your Telegram bot API key. And as the ESP8266 is not capable of SSL, it must be an unprotected HTTP URL. So handle with care! Something locally on your LAN is recommended.
 
 Once you have determined the base URL, add it to the code ("baseUrl"). For my ioBroker that would be "http://iobroker:8081/files/0_userdata.0/ota/" (with the name "iobroker" assigned to ioBroker's IP in my Fritzbox router, port 8081 being default for ioBroker, and "/ota" a subfolder I created in the ioBroker files section).
 
