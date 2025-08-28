@@ -85,7 +85,7 @@ void setup() {
 
   String ssid = "doorbell_receiver_" + String(ESP.getChipId());
   Serial.println("WiFi initialization with " + ssid + 
-                 " in case no Wifi credentials stored.");
+                 " in case no WiFi credentials stored.");
   wifiManager.autoConnect(ssid.c_str());
   Serial.println("WiFi connected.");
 
