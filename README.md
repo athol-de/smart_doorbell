@@ -45,7 +45,7 @@ That's it for the hardware!
 
 __getting the receiver ready__
 
-To determine the receiver's IP it's necessary we start with this one. That's easy: open the receiver.ino code in your favorite IDE (e.g. Arduino IDE), connect the receiver ESP to your PC, and flash the firmware. The code plans for 8 LEDs; if you have a longer strip, make sure you adjust the parameter in the code.
+To determine the receiver's IP it's necessary we start with this one. That's easy: open the receiver.c code in your favorite IDE (e.g. Arduino IDE), connect the receiver ESP to your PC, and flash the firmware. The code plans for 8 LEDs; if you have a longer strip, make sure you adjust the parameter in the code.
 
 Once it has rebooted, it will look for known WiFi networks (there are none), than it will switch to AP mode. You will see a new WiFi named "doorbell_receiver_ABCDEF" (with ABCDEF the hex serial number of your ESP). Connect to it, open http://192.168.4.1 with a browser, there choose the WiFi the ESP shall connect to in production, provide the password and confirm. The ESP will reboot and connect to that given network. (This process is provided by the WiFiManager.h library, not my own work.) You will see a short initial animation on the connected LED stripe (in case you managed to connect the LED stripe correctly).
 
@@ -53,7 +53,7 @@ Now your receiver is already running and listining. To identify its IP address y
 
 __getting the master ready__
 
-The master works similar, also using WiFiManager for an easy configuration of the WiFi without hardcoding the credentials. But first, we have to change the code according to your personal preferences and accounts. For that open master.ino in your favorite IDE and start changing it.
+The master works similar, also using WiFiManager for an easy configuration of the WiFi without hardcoding the credentials. But first, we have to change the code according to your personal preferences and accounts. For that open master.c in your favorite IDE and start changing it.
 
 If there are features you don't want to use, e.g. OTA or MQTT, make sure to delete everything belonging to that feature (or make it a comment).
 
