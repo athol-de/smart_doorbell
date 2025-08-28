@@ -37,7 +37,7 @@ __how to build__
 
 One ESP becomes the "master", one the "receiver".
 
-On the master, connect the opto coupler on the photo resistor side to GND and D4 of the ESP (or any other GPIO you find more convenient). Connect the AC side with the 1k resistor in a row to the doorbell switch. The resistor makes the 12V AC survivable for the LED built into the opto coupler.
+On the master, connect the opto coupler on the photo resistor side to GND and D4 of the ESP (or any other GPIO you find more convenient). Connect the AC side with the 1k resistor in a row to your doorbell switch, parallel to the existing doorbell ring. The resistor makes the 12V AC survivable for the LED built into the opto coupler. 
 
 On the receiver, connect the LED stripe to GND, 5V and the data pin to D1 (or any other GPIO you find more convenient).
 
