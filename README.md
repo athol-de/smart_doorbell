@@ -39,13 +39,13 @@ One ESP becomes the "master", one the "receiver".
 
 On the master, connect the opto coupler on the photo resistor side to GND and D4 of the ESP (or any other GPIO you find more convenient). Connect the AC side with the 1k resistor in a row to the doorbell switch. The resistor makes the 12V AC survivable for the LED built into the opto coupler.
 
-On the receiver, connect the LED stripe to GND, 5V and the data pin to D1 (or any other you find more convenient).
+On the receiver, connect the LED stripe to GND, 5V and the data pin to D1 (or any other GPIO you find more convenient).
 
 That's it for the hardware!
 
 __getting the receiver ready__
 
-You can skip this paragraph if you don't want to use a separate receiver but stick with Telegram and/or MQTT. To determine the receiver's IP it's necessary we start with this one. That's easy: open the receiver.ino code in your favorite IDE (e.g. Arduino IDE), connect the receiver ESP to your PC, and flash the firmware. The code plans for 8 LEDs; if you have a longer strip, make sure you adjust the parameter in the code.
+To determine the receiver's IP it's necessary we start with this one. That's easy: open the receiver.ino code in your favorite IDE (e.g. Arduino IDE), connect the receiver ESP to your PC, and flash the firmware. The code plans for 8 LEDs; if you have a longer strip, make sure you adjust the parameter in the code.
 
 Once it has rebooted, it will look for known WiFi networks (there are none), than it will switch to AP mode. You will see a new WiFi named "doorbell_receiver_ABCDEF" (with ABCDEF the hex serial number of your ESP). Connect to it, open http://192.168.4.1 with a browser, there choose the WiFi the ESP shall connect to in production, provide the password and confirm. The ESP will reboot and connect to that given network. (This process is provided by the WiFiManager.h library, not my own work.) You will see a short initial animation on the connected LED stripe (in case you managed to connect the LED stripe correctly).
 
@@ -55,13 +55,15 @@ __getting the master ready__
 
 The master works similar, also using WiFiManager for an easy configuration of the WiFi without hardcoding the credentials. But first, we have to change the code according to your personal preferences and accounts. For that open master.ino in your favorite IDE and start changing it.
 
+If there are features you don't want to use, e.g. OTA or MQTT, make sure to delete everything belonging to that feature (or make it a comment).
+
 __UPD__
 
-You can skip this paragraph if you don't need the receiver part. I chose UDP for the communication between master and receiver for timing reasons - UDP is quite fast, because it does not have the overhead including DNS resolving etc. But therefore you have to enter the receiver's IP in the code ("bellIP1"). That will be the IP the UDP package will be sent to in case the doorbell rings and the receiver should listen to - see above.
+I chose UDP for the communication between master and receiver for timing reasons - UDP is quite fast, because it does not have the overhead including DNS resolving etc. But therefore you have to enter the receiver's IP in the code ("bellIP1"). That will be the IP the UDP package will be sent to in case the doorbell rings and the receiver should listen to - see above.
 
 __Telegram__
 
-You can skip this paragraph if you don't need the Telegram part. Otherwise, you will need a Telegram bot API and therefore use a bot you already have or get a new one.
+You will need a Telegram bot API and therefore use a bot you already have or get a new one.
 
 To get one, open Telegram (web or mobile device) and start talking to "BotFather". He will guide you through the process of creating a bot (and changing the name, adding a photo etc.). You will get the API key from him.
 
@@ -73,7 +75,7 @@ Adjust the Telegram message if you like.
 
 __OTA__
 
-You can skip this paragraph if you don't want to use OTA. Otherwise, find a location where you can store the firmware. In my case that's my ioBroker instance, but it can be any URL accessable by the ESP, e.g. a simple file server. It can even be on the internet, but I do not recommend that, because anybody can access it if he knows the URL, and even it's an compiled BIN file, it contains at least your Telegram bot API key, and the ESP8266 is not capable of SSL, so it must be an unprotected HTTP URL. So handle with care!
+Find a location where you can store the firmware. In my case that's my ioBroker instance, but it can be any URL accessable by the ESP, e.g. a simple file server. It can even be on the internet, but I do not recommend that, because anybody can access it if he knows the URL, and even it's an compiled BIN file, it contains at least your Telegram bot API key, and the ESP8266 is not capable of SSL, so it must be an unprotected HTTP URL. So handle with care!
 
 Once you have determined the base URL, add it to the code ("baseUrl"). For my ioBroker that would be "http://iobroker:8081/files/0_userdata.0/ota/" (with the name "iobroker" assigned to the IP in my Fritzbox router, and /ota a subfolder I created in the ioBroker files section).
 
