@@ -69,7 +69,7 @@ To get one, open Telegram (web or mobile device) and start talking to "BotFather
 
 Then talk to "userinfobot" by typing "/start". This bot will tell you your own chatID. Finally, start talking to your own, newly created bot by typing "/start". It won't answer, but it is necessary that the conversation is initiated by you - it can't just start talking to you.
 
-If you want to add additional recipients, do the same for their accounts and duplicate the Telegram message sending-related lines in the code. (It's called CHAT_ID1 in the code by purpose, because my personal instance is sending out messages to two different chatIDs.)
+If you want to add additional recipients, let their accounts also talk to userinfobot for their chatID, and let them start the conversation with the bot. You don't need to create a separate bot per recipient. Duplicate the Telegram message sending-related lines in the code. (It's called CHAT_ID1 in the code by purpose, because my personal instance is sending out messages to two different chatIDs.)
 
 Adjust the Telegram message as you like.
 
