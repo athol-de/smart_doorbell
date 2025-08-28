@@ -49,9 +49,9 @@ const unsigned int remotePort = 4210;
 const unsigned long debounceDelay = 5000;
 
 IPAddress bellIP1(192, 168, 123, 123);    // your receiver's IP
-IPAddress mqttServer(192, 168, 123, 124); // your MQTT broker's IP
 
-// MQTT Zugang
+// MQTT broker
+IPAddress mqttServer(192, 168, 123, 124); // your MQTT broker's IP
 const char* mqttUsername = "YOUR_MQTT_USER";
 const char* mqttPassword = "YOUR_MQTT_PASSWORD";
 
